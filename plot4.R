@@ -36,6 +36,7 @@ df$dateTime<- strptime(df$dateTime, "%d/%m/%Y %H:%M:%S")
 
 
 ## Plots
+png(filename = "plot4.png" , width = 480, height = 480, units = "px", bg = "white")
 par(mfcol = c(2, 2))
 
 plot(df$dateTime, df$Global_active_power, xlab="",
@@ -72,6 +73,6 @@ plot(df$dateTime,df$Global_reactive_power,
      main = NULL,
      type = "l")
 
-dev.copy(png, file = "plot4.png") ## Copy plot to PNG
+#dev.copy(png, file = "plot4.png") ## Copy plot to PNG
 dev.off() ## close PNG device
 
