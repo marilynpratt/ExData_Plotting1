@@ -21,6 +21,15 @@ df <- sqldf("select * from pf where Date == '1/2/2007' or Date == '2/2/2007' ",
 
 close(pf)
 
+#check to see if there are any "NA's" in df by converting all "?" to NA
+df[ df == "?"] = NA
+#sum the number of NA's found and if there are any omit those records 
+
+if (!sum(is.na(df)) == 0 )
+{ df<- na.omit(df) }
+#creating a table to see that all columns are clean of "NA's" (not necessary but double check)
+na_count <-sapply(df, function(y) sum(length(which(is.na(y)))))
+
 
 #objects in the database can be accessed by simply giving their names.
 
@@ -35,5 +44,9 @@ df$dateTime<- strptime(df$dateTime, "%d/%m/%Y %H:%M:%S")
 png(filename = "plot2.png" , width = 480, height = 480, units = "px", bg = "white")
 with(df, plot(dateTime, Global_active_power, type = 'l', xlab = "", 
               ylab = "Global Active Power (kilowatts)" ))
+dev.copy(png,file="plot2.png", 
+         width=480,height=480, 
+         units= "px",
+         bg = "transparent")
 # Close Graphical device
 dev.off()
